@@ -18,12 +18,12 @@ class Costmap2d():
 		self.grid = np.array(msg.data, dtype=np.int8).reshape(msg.info.height, msg.info.width)
 		self.size_x_ = msg.info.width
 
-	def getCost(self, x, y):
-		mx, my = self.getWorldToMap(x, y)
+	def getCost(self, mx, my):
+		
 		if(abs(mx) > self.costmap.info.height - 1 or abs(my) > self.costmap.info.width - 1):
 			return 1.0
 
-		return self.grid[int(mx)][int(my)] / 100.
+		return self.grid[int(my)][int(mx)] / 100.
 
 	def getWorldToMap(self, x, y):
 		mx = round((x - self.costmap.info.origin.position.x) / self.costmap.info.resolution)
