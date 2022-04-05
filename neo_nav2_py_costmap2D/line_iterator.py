@@ -15,7 +15,7 @@ class LineIterator():
         self.curpixel_ = 0
         self.xinc1_, self.xinc2_, self.yinc1_, self.yinc2_ = 0, 0, 0, 0
         self.num_, self.den_ = 0, 0
-        self.numadd_ = 0.0
+        self.numadd_ = 0
 
         if (self.x1_ >= x0):
             self.xinc1_ = 1
