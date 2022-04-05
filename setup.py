@@ -19,8 +19,8 @@ setup(
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': [
-            'neo_nav2_py_costmap2D = neo_nav2_py_costmap2D.neo_nav2_py_costmap2D:main'
-        ],
+        # 'console_scripts': [
+        #     'neo_nav2_py_costmap2D = neo_nav2_py_costmap2D.neo_nav2_py_costmap2D:main'
+        # ],
     },
 )
