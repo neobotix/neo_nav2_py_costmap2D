@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from nav_msgs.msg import OccupancyGrid, Path
-from geometry_msgs.msg import PolygonStamped
+from geometry_msgs.msg import PolygonStamped, Polygon, Point
 import numpy as np
 
 class Costmap2d():
@@ -27,6 +27,19 @@ class Costmap2d():
 				return 1.0
 
 		return footprint_cost
+
+	def getFootprintCostAtPose(self, x, y, theta, footprint):
+		cos_th = np.cos(theta)
+		sin_th = np.sin(theta)
+		oriented_footprint = Polygon()
+
+		for i in range(0, len(footprint.points)):
+			new_pt = Point()
+			new_pt.x = x + (footprint.points[i].x * cos_th - footprint.points[i].y * sin_th)
+			new_pt.y = y + (footprint.points[i].x * sin_th + footprint.points[i].y * cos_th)
+			oriented_footprint.points.append(new_pt)
+
+		return (self.getFootprintCost(oriented_footprint))
 
 	def costmap_callback(self, msg):
 		self.costmap = msg
