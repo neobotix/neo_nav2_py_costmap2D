@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from nav_msgs.msg import OccupancyGrid, Path
+from geometry_msgs.msg import PolygonStamped
 import numpy as np
 
 class Costmap2d():
@@ -11,6 +12,21 @@ class Costmap2d():
             10)
 		self.subscription  # prevent unused variable warning.
 		self.map_resolution = 0.0
+
+	def footprint_callback(self, msg):
+		self.footprint = msg.polygon
+
+	def getFootprintCost(self, footprint):
+		footprint_cost = 0.0
+
+		for i in range(0, len(footprint.points)-1):
+			x1, y1 = self.getWorldToMap(footprint.points[i].x, footprint.points[i].y)
+			footprint_cost = np.fmax(self.getCost(x1, y1), footprint_cost)
+
+			if (footprint_cost == 1.0):
+				return 1.0
+
+		return footprint_cost
 
 	def costmap_callback(self, msg):
 		self.costmap = msg
